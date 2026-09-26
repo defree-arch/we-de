@@ -1,10 +1,10 @@
 package ex_cla;
-import java.util.*;;
+import java.util.*;
 
 public class targetlist {
 
     // field of class
-    private static ArrayList<String> targets;
+    private ArrayList<String> targets;
 
     // constructor
     public targetlist() {
@@ -29,20 +29,15 @@ public class targetlist {
 
     // delete deal
     public void deleteDeal(int index) {
-        try {
-
-            if (index < 1 || index > targets.size()) {
-                throw new IllegalArgumentException("Нет такой задачи!");
-            }
-            targets.remove(index - 1);
-        } catch (InputMismatchException e) {
-            System.out.println("Ошибка: введено не число.");
-            throw new IllegalArgumentException("Некорректный ввод данных.");
+        if (index < 1 || index > targets.size()) {
+            throw new IllegalArgumentException("Нет такой задачи!");
         }
+        targets.remove(index - 1);
     }
 
     // print deals
     public void printDeals() {
+        //throws are deleted
         for (int i = 0; i < targets.size(); i++) {
             System.out.println(i + 1 + ". " + targets.get(i));
         }
@@ -59,47 +54,54 @@ public class targetlist {
         System.exit(0);
     }
 
-    public static void main() {
+    public static void main(String[] args) {
         targetlist deals = new targetlist();
         Scanner scan = new Scanner(System.in);
+        //action = scan.nextInt();
+        //scan.nextLine();
         int action = 0;
         while (action != 4) {
             deals.screen();
-            action = scan.nextInt();
-            scan.nextLine();
+
             try {
-                if (action < 0) {
-                    throw new IllegalArgumentException("Нет такого действия!");
+                action = scan.nextInt();
+                scan.nextLine();
+
+                //if (action < 0) {
+                //    throw new IllegalArgumentException("Нет такого действия!");
+                //}
+                switch (action) {
+                    case 1:
+                        System.out.println("Напишите задачу, которую хотите добавить: ");
+                        String deal = scan.nextLine();
+                        deals.addDeal(deal);
+                        break;
+                    case 2:
+                        if (deals.sizeDeals() > 0) {
+                            System.out.println("Список задач: ");
+                            deals.printDeals();
+                        }
+                        else {
+                            System.out.println("Задач нет.");
+                        }
+                        break;
+                    case 3:
+                        System.out.println("Выберите какую задачу удалить (номер)");
+                        int index_deal = scan.nextInt();
+                        deals.deleteDeal(index_deal);
+                        break;
+                    default:
+                        break;
                 }
             } catch (InputMismatchException e) {
-                System.out.println("Ошибка: введено не число.");
-                throw new IllegalArgumentException("Некорректный ввод данных.");
-            }
-            switch (action) {
-                case 1:
-                    System.out.println("Напишите задачу, которую хотите добавить: ");
-                    String deal = scan.nextLine();
-                    deals.addDeal(deal);
-                    break;
-                case 2:
-                    if (deals.sizeDeals() > 0) {
-                        System.out.println("Список задач: ");
-                        deals.printDeals();
-                    }
-                    else {
-                        System.out.println("Задач нет.");
-                    }
-                    break;
-                case 3:
-                    System.out.println("Выберите какую задачу удалить (номер)");
-                    int index_deal = scan.nextInt();
-                    deals.deleteDeal(index_deal);
-                    break;
-                default:
-                    break;
-            }
+            System.out.println("Ошибка: введено не число.");
+            scan.nextLine();
+            } catch (IllegalArgumentException e) {
+                System.out.println("Ошибка: " + e.getMessage());
+            } 
         }
         scan.close();
         deals.exit();
+        
     }
 }
