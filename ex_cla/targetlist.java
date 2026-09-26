@@ -4,25 +4,31 @@ import java.util.*;
 public class targetlist {
     
     //field of class
-    private ArrayList<String> targets;
+    private static ArrayList<String> targets;
     
     //constructor
     public targetlist (ArrayList<String> targets) {
-        this.targets = targets;
+        targets = new ArrayList<>();
     }
     
-    //start screen
-    public void startScreen () {
-        System.out.println("\n1 -  ; \n2 -  ; \n3 -  ; 4 - . \n :  ");
+    // screen
+    public static void screen () {
+        System.out.println("""
+            1 - Добавить задачу;
+            2 - Показать задачи;
+            3 - Удалить задачу;
+            4 - Выход.
+            Выберите действие:  
+        """);
     }
 
     //add deal
-    public void addDeal (String s) {
+    public static void addDeal (String s) {
         targets.add(s);
     }
 
     //delete deal
-    public void deleteDeal () {
+    public static void deleteDeal () {
         Scanner scan = new Scanner(System.in);
         try {
             int index = scan.nextInt();
@@ -30,7 +36,7 @@ public class targetlist {
             if (index < 1) {
                 throw new IllegalArgumentException("Нет такой задачи!");
             }
-            this.targets.remove(index);
+            targets.remove(index);
         }
         catch (InputMismatchException e) {
             System.out.println("Ошибка: Введено не число.");
@@ -42,9 +48,9 @@ public class targetlist {
     }
 
     //print deals
-    public void printDeals() {
-        for (int i = 0; i < this.targets.size(); i++) {
-            System.out.println(i + 1 + ". " + this.targets.get(i));
+    public static void printDeals() {
+        for (int i = 0; i < targets.size(); i++) {
+            System.out.println(i + 1 + ". " + targets.get(i));
         }
     }
 
