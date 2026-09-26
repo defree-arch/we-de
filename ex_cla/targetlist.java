@@ -1,5 +1,6 @@
 package ex_cla;
 import java.util.*;
+;
 public class targetlist {
     
     //field of class
@@ -12,7 +13,44 @@ public class targetlist {
     
     //start screen
     public void startScreen () {
-        System.out.println("\n1 - Добавить задачу; \n2 - Показать задачи; \n3 - Удалить задачу; 4 - Выйти. \nВыберите действие:  ");
+        System.out.println("\n1 -  ; \n2 -  ; \n3 -  ; 4 - . \n :  ");
     }
 
+    //add deal
+    public void addDeal (String s) {
+        targets.add(s);
+    }
+
+    //delete deal
+    public void deleteDeal () {
+        Scanner scan = new Scanner(System.in);
+        try {
+            int index = scan.nextInt();
+            
+            if (index < 1) {
+                throw new IllegalArgumentException("Нет такой задачи!");
+            }
+            this.targets.remove(index);
+        }
+        catch (InputMismatchException e) {
+            System.out.println("Ошибка: Введено не число.");
+            throw new IllegalArgumentException("Некорректный ввод данных.");
+        }
+        finally {
+            scan.close();
+        }
+    }
+
+    //print deals
+    public void printDeals() {
+        for (int i = 0; i < this.targets.size(); i++) {
+            System.out.println(i + 1 + ". " + this.targets.get(i));
+        }
+    }
+
+    //exit
+    public void exit() {
+        System.out.println("Выход...");
+        exit();
+    }
 }
