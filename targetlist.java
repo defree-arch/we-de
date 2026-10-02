@@ -67,6 +67,8 @@ public class targetlist {
         Scanner scan = new Scanner(System.in, "UTF-8");
         //action = scan.nextInt();
         //scan.nextLine();
+        rwtargets storage = new rwtargets("targets.txt");
+        deals.setTargets(storage.readTasks());
         int action = 0;
         while (action != 4) {
             deals.screen();
@@ -109,8 +111,7 @@ public class targetlist {
                 System.out.println("Ошибка: " + e.getMessage());
             } 
         }
-        rwtargets saving = new rwtargets("targets.txt");
-
+        storage.saveTasks(deals.getTargets());
         scan.close();
         deals.exit();
         

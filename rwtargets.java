@@ -24,15 +24,19 @@ public class rwtargets {
     }
 
     // read file
-    public void readTasks() {
+    public ArrayList<String> readTasks() {
+        ArrayList<String> t = new ArrayList<>();
+        File f = new File(file);
+        if (!f.exists()) return t;
         try (BufferedReader reader = new BufferedReader(new FileReader(file))) {
             String line;
             while ((line = reader.readLine()) != null) {
-                System.out.println(line + "\n");
+                t.add(line);
             }
         } catch (IOException e) {
             e.printStackTrace();
         }
+        return t;
     }
 
 }
