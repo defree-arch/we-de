@@ -1,4 +1,3 @@
-
 import java.util.*;
 
 public class targetlist {
@@ -11,6 +10,15 @@ public class targetlist {
         targets = new ArrayList<>();
     }
 
+    // getter 
+    public ArrayList<String> getTargets() {
+        return targets;
+    }
+
+    // setter
+    public void setTargets(ArrayList<String> targets) {
+        this.targets = targets;
+    } 
     // screen
     public void screen() {
         System.out.println("""
@@ -92,6 +100,7 @@ public class targetlist {
                         break;
                     default:
                         break;
+
                 }
             } catch (InputMismatchException e) {
             System.out.println("Ошибка: введено не число.");
@@ -100,6 +109,8 @@ public class targetlist {
                 System.out.println("Ошибка: " + e.getMessage());
             } 
         }
+        rwtargets saving = new rwtargets("targets.txt");
+
         scan.close();
         deals.exit();
         
