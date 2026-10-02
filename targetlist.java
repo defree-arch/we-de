@@ -1,4 +1,4 @@
-package ex_cla;
+
 import java.util.*;
 
 public class targetlist {
@@ -56,7 +56,7 @@ public class targetlist {
 
     public static void main(String[] args) {
         targetlist deals = new targetlist();
-        Scanner scan = new Scanner(System.in);
+        Scanner scan = new Scanner(System.in, "UTF-8");
         //action = scan.nextInt();
         //scan.nextLine();
         int action = 0;
