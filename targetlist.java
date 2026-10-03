@@ -3,7 +3,7 @@ import java.util.*;
 public class targetlist {
 
     // field of class
-    private ArrayList<String> targets;
+    private ArrayList<Task> targets;
 
     // constructor
     public targetlist() {
@@ -11,28 +11,37 @@ public class targetlist {
     }
 
     // getter 
-    public ArrayList<String> getTargets() {
+    public ArrayList<Task> getTargets() {
         return targets;
     }
 
     // setter
-    public void setTargets(ArrayList<String> targets) {
+    public void setTargets(ArrayList<Task> targets) {
         this.targets = targets;
     } 
+
     // screen
     public void screen() {
         System.out.println("""
-                    1 - Добавить задачу;
-                    2 - Показать задачи;
-                    3 - Удалить задачу;
-                    4 - Выход.
-                    Выберите действие:
+            1 - Добавить задачу;
+            2 - Показать задачи;
+            3 - Удалить задачу;
+            4 - Выход.
+            Выберите действие:
                 """);
     }
 
+    public void markTask(Scanner scan) {
+        System.out.println("Какую задачу пометить (номер): ");
+        int number = scan.nextInt() - 1;
+
+        if (number >= targets.size() || number < 0)
+            throw new IllegalArgumentException("Нет такой задачи!");
+        targets.get(number).markDone();
+    }
     // add deal
-    public void addDeal(String s) {
-        targets.add(s);
+    public void addDeal(Task task) {
+        targets.add(task);
     }
 
     // delete deal
@@ -49,9 +58,15 @@ public class targetlist {
         for (int i = 0; i < targets.size(); i++) {
             System.out.println(i + 1 + ". " + targets.get(i));
         }
+        System.out.println();
+        System.out.println("""
+        \n1 - Меню;
+        2 - Пометить задачу как решённую.
+        Выберите действие:
+        """);
     }
 
-    //the number of deals
+    // the number of deals
     public int sizeDeals() {
         return targets.size();
     }
@@ -61,6 +76,20 @@ public class targetlist {
         System.out.println("Выход...");
         System.exit(0);
     }
+
+    // ask priopity
+    private Priority priorityIs(Scanner scan) {
+        try {
+            System.out.println("Введите приоритет задачи (от 1 до 3, где 1 - низкий, 3 - высокий): ");
+            int level = scan.nextInt();
+            if (level == 1) return Priority.LOW;
+            else if (level == 2) return Priority.MEDIUM;
+            else return Priority.HIGH;
+        } catch (InputMismatchException e) {
+            System.out.println("Указано неверное значение приоритета, по-умолчанию приоритет - MEDIUM.");
+            return Priority.MEDIUM;
+        }
+    }   
 
     public static void main(String[] args) {
         targetlist deals = new targetlist();
@@ -83,13 +112,21 @@ public class targetlist {
                 switch (action) {
                     case 1:
                         System.out.println("Напишите задачу, которую хотите добавить: ");
-                        String deal = scan.nextLine();
+
+                        String name = scan.nextLine();
+                        Priority priority = deals.priorityIs(scan);
+                        Task deal = new Task(name, priority);
+
                         deals.addDeal(deal);
                         break;
                     case 2:
                         if (deals.sizeDeals() > 0) {
                             System.out.println("Список задач: ");
                             deals.printDeals();
+                            while (scan.nextInt() != 1) {
+                                deals.markTask(scan);
+                                deals.printDeals();
+                            }
                         }
                         else {
                             System.out.println("Задач нет.");
@@ -114,6 +151,5 @@ public class targetlist {
         storage.saveTasks(deals.getTargets());
         scan.close();
         deals.exit();
-        
     }
 }
