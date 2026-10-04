@@ -31,6 +31,7 @@ public class targetlist {
                 """);
     }
 
+    // mark task
     public void markTask(Scanner scan) {
         System.out.println("Какую задачу пометить (номер): ");
         int number = scan.nextInt() - 1;
@@ -55,6 +56,7 @@ public class targetlist {
     // print deals
     public void printDeals() {
         //throws are deleted
+        targets.sort(Comparator.comparing(Task::getPriority));
         for (int i = 0; i < targets.size(); i++) {
             System.out.println(i + 1 + ". " + targets.get(i));
         }
@@ -89,7 +91,9 @@ public class targetlist {
             System.out.println("Указано неверное значение приоритета, по-умолчанию приоритет - MEDIUM.");
             return Priority.MEDIUM;
         }
-    }   
+    }  
+
+
 
     public static void main(String[] args) {
         targetlist deals = new targetlist();
