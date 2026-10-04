@@ -12,10 +12,10 @@ public class rwtargets {
     }
 
     // save to file
-    public void saveTasks(ArrayList<String> tasks) {
+    public void saveTasks(ArrayList<Task> tasks) {
         try (BufferedWriter writer = new BufferedWriter(new FileWriter(file))) {
-            for (String task : tasks) {
-                writer.write(task);
+            for (Task task : tasks) {
+                writer.write(task.toFile());
                 writer.newLine();
             }
         } catch (IOException e) {
@@ -24,14 +24,15 @@ public class rwtargets {
     }
 
     // read file
-    public ArrayList<String> readTasks() {
-        ArrayList<String> t = new ArrayList<>();
+    public ArrayList<Task> readTasks() {
+        ArrayList<Task> t = new ArrayList<>();
         File f = new File(file);
         if (!f.exists()) return t;
         try (BufferedReader reader = new BufferedReader(new FileReader(file))) {
             String line;
             while ((line = reader.readLine()) != null) {
-                t.add(line);
+                Task task = Task.parseTask(line);
+                t.add(task);
             }
         } catch (IOException e) {
             e.printStackTrace();
