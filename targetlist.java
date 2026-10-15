@@ -150,7 +150,7 @@ public class targetlist {
         Scanner scan = new Scanner(System.in, "UTF-8");
         //action = scan.nextInt();
         //scan.nextLine();
-        rwtargets storage = new rwtargets("targets.txt");
+        TaskStorage storage = new FileStorage("targets.txt");
         deals.setTargets(storage.readTasks());
         int action = 0;
         while (action != 5) {

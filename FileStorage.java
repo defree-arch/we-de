@@ -1,17 +1,18 @@
 import java.io.*;
 import java.util.ArrayList;
 
-public class rwtargets {
+public class FileStorage implements TaskStorage{
 
     // field with name of file
     private String file;
 
     // constructor
-    public rwtargets(String file) {
+    public FileStorage(String file) {
         this.file = file;
     }
 
     // save to file
+    @Override
     public void saveTasks(ArrayList<Task> tasks) {
         try (BufferedWriter writer = new BufferedWriter(new FileWriter(file))) {
             for (Task task : tasks) {
@@ -24,6 +25,7 @@ public class rwtargets {
     }
 
     // read file
+    @Override 
     public ArrayList<Task> readTasks() {
         ArrayList<Task> t = new ArrayList<>();
         File f = new File(file);
@@ -39,5 +41,4 @@ public class rwtargets {
         }
         return t;
     }
-
 }
